@@ -46,7 +46,7 @@ export const Form = () => {
            </View>);
   };
    const Type = () => {
-    const [type, setType ] = useState('1');
+    const [type, setType ] = useState('window');
      const types= ['window', 'crack', 'gable', 'balcony', 'cornice', 'cables', ];
     return(<View style={styles.view}>
              <Text style={styles.text}>Type: </Text>
@@ -59,7 +59,7 @@ export const Form = () => {
            </View>);
    };
     const Species = () => {
-    const [species, setSpecies ] = useState('1');
+    const [species, setSpecies ] = useState('Swallow');
       const specieses= ['Swallow', 'Swift', 'Martin' ];
     return(<View style={styles.view}>
              <Text style={styles.text}>Species: </Text>
@@ -71,15 +71,47 @@ export const Form = () => {
              </Picker>
            </View>);
    };
-  
-  
+
+  const Orientation = () => {
+    const [ orientation, setOrientation ] = useState('N');
+    const orientations = [ 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']; 
+     return(<View style={styles.view}>
+             <Text style={styles.text}>Orientation: </Text>
+             <Picker style={{width: 120}}
+                     selectedValue={orientation}
+                     onValueChange={(itemValue, itemIndex) => setOrientation(itemValue)}
+                     mode='dialog'>
+               {orientations.map(n => <Picker.Item key={'key-' + n} label={n} value={n}/>)}
+             </Picker>
+           </View>);
+  };
+
+  const Quantity = () => {
+    const [ quantity, setQuantity ] = useState('1');
+    return(<View Style={{flex: 1}}>
+             <Text style={{fontSize: 10}}>Each nest is represented by an entry/row in the database. In the case of multiple nests with the exact same specifications update this value:</Text>
+             <View style={styles.view}>
+               <Text style={styles.text}>Qty.: </Text>
+               <TextInput style={styles.textInput}
+                          selectedValue={quantity}
+                          onChangeText={(e) => setQuantity(e)}
+                          selectTextOnFocus={true}
+                          value={quantity}>
+               </TextInput>
+             </View>
+           </View>);
+  };
+
+
   return(<View>
            <StreetInput />
            <HouseNumberInput />
            <LocationData />
            <Species/>
-           <Type />
            <Height />
+           <Orientation />
+           <Type />
+           <Quantity />
            
          </View>);
 };
