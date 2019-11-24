@@ -1,11 +1,11 @@
 import React, { useState, Component } from 'react';
 import {
-  Platform, Text, View, StyleSheet,
+  Platform, Text, TextInput, View, StyleSheet,
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-
+import { styles } from './helper.js';
 export const LocationData = () => {
   const [location, setLocation] = useState({ state: 'waiting...' });
 
@@ -16,27 +16,39 @@ export const LocationData = () => {
         errorMessage: 'Permission to access location was denied',
       });
     }
-    const reading = await Location.getCurrentPositionAsync({});
+    const reading = await Location.getCurrentPositionAsync();
     setLocation({ reading });
-  };
+    
+  }; 
   getLocationAsync();
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      color: 'red',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
 
   return (
-    <View style={styles.container}>
-      <Text>
-        {location.errorMessage ? location.errorMessage
-          : location.state ? location.state : JSON.stringify(location)}
-      </Text>
+    <View >
+      <View style={styles.view}>
+        <Text style={styles.text}>Longitude: </Text>
+        <TextInput style={styles.textInput}
+                   selectTextOnFocus={true}
+                   value={location.errorMessage ? location.errorMessage
+                     : location.state ? location.state : JSON.stringify(location.reading.coords.longitude)}
+        />
+      </View>
+      <View style={styles.view}>
+        <Text style={styles.text}>Latitude: </Text>
+        <TextInput style={styles.textInput}
+                   selectTextOnFocus={true}
+                   value={location.errorMessage ? location.errorMessage
+                     : location.state ? location.state : JSON.stringify(location.reading.coords.latitude)}
+        />
+      </View>
+      <View style={styles.view}>
+        <Text style={styles.text}>Time stamp: </Text>
+        <TextInput style={styles.textInput}
+                   selectTextOnFocus={true}
+                   value={location.errorMessage ? location.errorMessage
+                     : location.state ? location.state : JSON.stringify(location.reading.timestamp)}
+        />
+      </View>
     </View>
   );
 };
